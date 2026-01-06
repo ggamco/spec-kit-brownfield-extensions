@@ -151,6 +151,76 @@ your-project/
         └── tasks.md
 ```
 
+## 🚀 Enhance with Repomix (Recommended)
+
+For large brownfield projects, we recommend using [Repomix](https://github.com/yamadashy/repomix) to help AI coding tools better understand your existing codebase. Repomix generates structured "Skills" that serve as long-term memory for Claude Code.
+
+### Why Repomix?
+
+| Challenge | How Repomix Helps |
+|-----------|-------------------|
+| **Context Window Limits** | Compresses codebase into AI-friendly format via Tree-sitter |
+| **Code Reuse** | Enables quick search of existing Utils, DTOs, Services |
+| **Accuracy** | Generated constitution precisely reflects module structure |
+| **Dynamic Updates** | `repomix --skill-generate` is idempotent - run anytime to sync |
+
+### Setup Guide (Claude Code)
+
+**Step 1: Install Repomix CLI**
+
+```bash
+npm install -g repomix
+```
+
+**Step 2: Install Repomix MCP for Claude Code**
+
+Configure Claude Code to support Repomix's Model Context Protocol:
+
+```bash
+claude mcp add repomix -- npx -y repomix --mcp
+```
+
+**Step 3: Install Repomix Plugin (Optional)**
+
+For convenient slash commands like `/repomix-explorer`:
+
+```
+# In Claude Code interactive interface
+/plugin install repomix-mcp@repomix
+```
+
+### Generate Skills for Your Project
+
+Run the following command in your project root:
+
+```bash
+repomix --skill-generate
+```
+
+This creates a `.claude/skills/` directory with structured references:
+
+```
+.claude/skills/repomix-reference-[project-name]/
+├── SKILL.md                 # Core skill metadata
+└── references/
+    ├── summary.md           # Project purpose and statistics
+    ├── project-structure.md # Directory tree with line counts
+    ├── files.md             # Full file contents (grep-optimized)
+    └── tech-stack.md        # Auto-detected tech stack
+```
+
+Claude Code automatically loads these Skills as part of its long-term memory.
+
+### Best Practices
+
+| When to Run | Action |
+|-------------|--------|
+| **First time using brownfield-bootstrap** | Run `repomix --skill-generate` before bootstrap |
+| **Before major feature development** | Refresh skills to ensure latest codebase understanding |
+| **After significant code changes** | Re-run to sync AI's memory with current code |
+
+> **💡 Tip**: The brownfield-bootstrap command already includes rules for code reuse and understanding existing code. With Repomix Skills loaded, Claude Code will automatically search existing implementations before creating new code.
+
 ## Language Versions
 
 | File | Language | Description |
