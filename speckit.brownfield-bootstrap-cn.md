@@ -442,6 +442,7 @@ repomix --skill-generate
 - 首次接触项目时
 - 大型功能开发或重构前
 - 代码库发生重大变化后
+- `/speckit.specify` 命令前
 
 ## 技术栈锚定
 
