@@ -442,6 +442,7 @@ repomix --skill-generate
 - First time encountering the project
 - Before major feature development or refactoring
 - After significant changes to the codebase
+- Before command `/speckit.specify`
 
 ## Tech Stack Anchoring
 
