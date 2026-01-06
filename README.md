@@ -22,6 +22,48 @@ When you have an **existing project (brownfield project)** and want to adopt spe
 3. **Adapting templates** to your specific tech stack and coding style
 4. **Validating readiness** to ensure SDD workflow can be immediately enabled
 
+## 📊 Workflow Overview
+
+This extension provides commands that extend the standard spec-kit SDD workflow:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                           Extended SDD Workflow                                  │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                  │
+│   [Existing Project]                                                             │
+│         │                                                                        │
+│         ▼                                                                        │
+│   ┌─────────────────────────┐                                                   │
+│   │ /speckit.brownfield-    │  ← Bootstrap existing project into SDD            │
+│   │ bootstrap               │                                                    │
+│   └───────────┬─────────────┘                                                   │
+│               │                                                                  │
+│               ▼                                                                  │
+│   ┌─────────────────────────┐     ┌─────────────────────────┐                   │
+│   │ User Requirements       │────▶│ /speckit.ears           │  ← Optional       │
+│   │ (Natural Language)      │     │ (EARS Format Conversion)│    Pre-step       │
+│   └─────────────────────────┘     └───────────┬─────────────┘                   │
+│                                               │                                  │
+│                                               ▼                                  │
+│   ┌─────────────────────────────────────────────────────────────────────────┐   │
+│   │                    Standard spec-kit SDD Workflow                        │   │
+│   │  ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐              │   │
+│   │  │ /speckit │──▶│ /speckit │──▶│ /speckit │──▶│ /speckit │              │   │
+│   │  │ .specify │   │ .plan    │   │ .tasks   │   │.implement│              │   │
+│   │  └──────────┘   └──────────┘   └──────────┘   └──────────┘              │   │
+│   └─────────────────────────────────────────────────────────────────────────┘   │
+│                                                                                  │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Commands Provided
+
+| Command | Purpose | When to Use |
+|---------|---------|-------------|
+| `/speckit.brownfield-bootstrap` | Initialize SDD for existing projects | First time adopting spec-kit in a brownfield project |
+| `/speckit.ears` | Convert requirements to EARS format | Before `/speckit.specify` when requirements are complex or ambiguous |
+
 ## Key Features
 
 ### 🔍 Automatic Project Discovery
@@ -221,12 +263,64 @@ Claude Code automatically loads these Skills as part of its long-term memory.
 
 > **💡 Tip**: The brownfield-bootstrap command already includes rules for code reuse and understanding existing code. With Repomix Skills loaded, Claude Code will automatically search existing implementations before creating new code.
 
+## 📝 EARS Requirements Conversion (Optional Pre-step)
+
+The `/speckit.ears` command provides an **optional pre-step** to improve requirement quality before entering the standard SDD workflow. It converts natural language requirements into [EARS (Easy Approach to Requirements Syntax)](https://alistairmavin.com/ears/) format.
+
+### Why Use EARS?
+
+| Problem | How EARS Helps |
+|---------|----------------|
+| **Ambiguous requirements** | Fixed sentence templates force clear trigger conditions and responses |
+| **AI misinterpretation** | Structured format reduces ambiguity, improves AI accuracy |
+| **Missing requirements** | Categorized templates ensure comprehensive coverage |
+| **Unclear acceptance criteria** | Each EARS requirement is inherently testable |
+
+### EARS Five Requirement Patterns
+
+| Pattern | Template | Example |
+|---------|----------|---------|
+| **Ubiquitous** | `The system shall <function>` | The system shall encrypt all user passwords |
+| **Event-Driven** | `When <trigger>, the system shall <response>` | When user clicks submit, the system shall validate input |
+| **State-Driven** | `If <state>, then the system shall <behavior>` | If user is admin, then the system shall show admin panel |
+| **Optional** | `Where <condition>, the user can <operation>` | Where notifications are enabled, the user can set frequency |
+| **Complex** | `When <trigger>, and <state>, the system shall <response>` | When login fails, and attempts exceed 5, the system shall lock account |
+
+### Usage
+
+```bash
+# Convert requirement to EARS format
+/speckit.ears I need a user login feature supporting phone and email
+
+# Then continue to spec creation
+/speckit.specify .docs/EARS/001-user-login.md
+```
+
+### Output Location
+
+EARS documents are stored separately from spec-kit core directories:
+
+```
+your-project/
+├── .docs/                    # Documentation (not SDD core)
+│   └── EARS/                 # EARS requirement documents
+│       ├── 001-user-login.md
+│       └── 002-payment.md
+├── .specify/                 # SDD configuration (unchanged)
+└── specs/                    # Feature specs (unchanged)
+```
+
+> **📍 Why separate location?**
+> EARS requirements are optional and outside the standard spec-kit workflow. Keeping them in `.docs/EARS/` avoids interference with core SDD files.
+
 ## Language Versions
 
 | File | Language | Description |
 |------|----------|-------------|
-| `speckit.brownfield-bootstrap.md` | English | Default English version |
-| `speckit.brownfield-bootstrap-cn.md` | 中文 | Chinese version |
+| `speckit.brownfield-bootstrap.md` | English | Brownfield bootstrap (English) |
+| `speckit.brownfield-bootstrap-cn.md` | 中文 | Brownfield bootstrap (Chinese) |
+| `speckit.ears.md` | English | EARS conversion (English) |
+| `speckit.ears-cn.md` | 中文 | EARS conversion (Chinese) |
 
 ## Compatibility
 
