@@ -62,6 +62,7 @@ This extension provides commands that extend the standard spec-kit SDD workflow:
 | Command | Purpose | When to Use |
 |---------|---------|-------------|
 | `/speckit.brownfield-bootstrap` | Initialize SDD for existing projects | First time adopting spec-kit in a brownfield project |
+| `/speckit.skills` | Generate senior developer Skills for project | Enable AI to master project conventions and patterns |
 | `/speckit.ears` | Convert requirements to EARS format | Before `/speckit.specify` when requirements are complex or ambiguous |
 
 ## Key Features
@@ -193,6 +194,56 @@ your-project/
         └── tasks.md
 ```
 
+## 🧠 Developer Skills Generation (NEW)
+
+The `/speckit.skills` command generates **Project Skills** that make Claude Code behave like a senior developer who has been maintaining your project for years.
+
+### What It Does
+
+This command analyzes your project and generates structured Skills that:
+
+| Capability | Description |
+|------------|-------------|
+| **Master Tech Stack** | Deep understanding of languages, frameworks, and tools |
+| **Follow Conventions** | Adhere to your project's coding style and patterns |
+| **Understand Architecture** | Know where to place new code and how modules interact |
+| **Prioritize Reuse** | Always search for existing code before creating new |
+| **Maintain Compatibility** | Never break existing functionality |
+
+### Usage
+
+```bash
+# Generate developer skills for your project
+/speckit.skills
+```
+
+### Generated Skills Structure
+
+```
+.claude/skills/brownfield-developer-[project-name]/
+├── SKILL.md                    # Skill entry point (usage guide)
+└── references/
+    ├── architecture.md         # Project architecture and layering
+    ├── tech-stack.md           # Tech stack details and constraints
+    ├── coding-conventions.md   # Coding standards and style
+    ├── module-structure.md     # Module structure and responsibilities
+    └── development-patterns.md # Development patterns and best practices
+```
+
+### Key Features
+
+- **Idempotent**: Run anytime to refresh Skills based on current project state
+- **Team Shareable**: Add `.claude/skills/` to version control
+- **Complementary**: Works alongside Repomix for complete project understanding
+
+### Recommended Workflow
+
+1. Run `/speckit.skills` to generate developer expertise
+2. Run `repomix --skill-generate` to generate code snapshots
+3. Together they provide comprehensive project mastery
+
+> **💡 Tip**: Re-run `/speckit.skills` after major architectural changes to keep AI understanding current.
+
 ## 🚀 Enhance with Repomix (Recommended)
 
 For large brownfield projects, we recommend using [Repomix](https://github.com/yamadashy/repomix) to help AI coding tools better understand your existing codebase. Repomix generates structured "Skills" that serve as long-term memory for Claude Code.
@@ -319,6 +370,8 @@ your-project/
 |------|----------|-------------|
 | `speckit.brownfield-bootstrap.md` | English | Brownfield bootstrap (English) |
 | `speckit.brownfield-bootstrap-cn.md` | 中文 | Brownfield bootstrap (Chinese) |
+| `speckit.skills.md` | English | Developer skills generation (English) |
+| `speckit.skills-cn.md` | 中文 | Developer skills generation (Chinese) |
 | `speckit.ears.md` | English | EARS conversion (English) |
 | `speckit.ears-cn.md` | 中文 | EARS conversion (Chinese) |
 
