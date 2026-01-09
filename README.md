@@ -62,7 +62,7 @@ This extension provides commands that extend the standard spec-kit SDD workflow:
 | Command | Purpose | When to Use |
 |---------|---------|-------------|
 | `/speckit.brownfield-bootstrap` | Initialize SDD for existing projects | First time adopting spec-kit in a brownfield project |
-| `/speckit.skills` | Generate senior developer Skills for project | Enable AI to master project conventions and patterns |
+| `brownfield-skills` | Generate senior developer Skills for project | Enable AI to master project conventions and patterns |
 | `/speckit.ears` | Convert requirements to EARS format | Before `/speckit.specify` when requirements are complex or ambiguous |
 
 ## Key Features
@@ -196,7 +196,7 @@ your-project/
 
 ## 🧠 Developer Skills Generation (NEW)
 
-The `/speckit.skills` command generates **Project Skills** that make Claude Code behave like a senior developer who has been maintaining your project for years.
+The **Brownfield Developer Skills Generator** (`brownfield-skills.md`) generates **Project Skills** that make Claude Code behave like a senior developer who has been maintaining your project for years.
 
 ### What It Does
 
@@ -213,8 +213,11 @@ This command analyzes your project and generates structured Skills that:
 ### Usage
 
 ```bash
+# Copy the skills generator to your commands directory
+cp brownfield-skills.md .claude/commands/
+
 # Generate developer skills for your project
-/speckit.skills
+# Use in your AI coding tool
 ```
 
 ### Generated Skills Structure
@@ -238,11 +241,11 @@ This command analyzes your project and generates structured Skills that:
 
 ### Recommended Workflow
 
-1. Run `/speckit.skills` to generate developer expertise
+1. Run the Brownfield Skills Generator to generate developer expertise
 2. Run `repomix --skill-generate` to generate code snapshots
 3. Together they provide comprehensive project mastery
 
-> **💡 Tip**: Re-run `/speckit.skills` after major architectural changes to keep AI understanding current.
+> **💡 Tip**: Re-run the skills generator after major architectural changes to keep AI understanding current.
 
 ## 🚀 Enhance with Repomix (Recommended)
 
@@ -370,8 +373,8 @@ your-project/
 |------|----------|-------------|
 | `speckit.brownfield-bootstrap.md` | English | Brownfield bootstrap (English) |
 | `speckit.brownfield-bootstrap-cn.md` | 中文 | Brownfield bootstrap (Chinese) |
-| `speckit.skills.md` | English | Developer skills generation (English) |
-| `speckit.skills-cn.md` | 中文 | Developer skills generation (Chinese) |
+| `brownfield-skills.md` | English | Brownfield Developer Skills Generator (English) |
+| `brownfield-skills-cn.md` | 中文 | Brownfield Developer Skills Generator (Chinese) |
 | `speckit.ears.md` | English | EARS conversion (English) |
 | `speckit.ears-cn.md` | 中文 | EARS conversion (Chinese) |
 

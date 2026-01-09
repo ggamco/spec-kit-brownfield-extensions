@@ -1,5 +1,5 @@
 ---
-description: Generate "Senior Developer Expert in This Project" Skills for brownfield projects, enabling AI coding tools to acquire all professional knowledge needed for long-term project maintenance.
+description: Brownfield Developer Skills Generator - Generate "Senior Developer Expert in This Project" Skills for existing projects, enabling AI coding tools to acquire all professional knowledge needed for long-term project maintenance.
 handoffs:
   - label: Bootstrap SDD Workflow
     agent: /speckit.brownfield-bootstrap
@@ -335,7 +335,7 @@ repomix --skill-generate
 
 ---
 
-**Version**: 1.0.0 | **Generated**: [DATE] | **Source**: /speckit.skills
+**Version**: 1.0.0 | **Generated**: [DATE] | **Source**: Brownfield Developer Skills Generator
 ```
 
 #### Step 1.3: Generate architecture.md
@@ -834,7 +834,7 @@ This command supports repeated execution:
 
 1. **Verify Skills loading**: Restart Claude Code or refresh session
 2. **Test skill effectiveness**: Try asking project-related questions
-3. **Keep in sync**: Re-run `/speckit.skills` after major project changes
+3. **Keep in sync**: Re-run this tool after major project changes
 
 ### Suggested Commands
 
@@ -877,12 +877,12 @@ This command complements Repomix:
 
 | Tool | Focus | Output |
 |------|-------|--------|
-| `/speckit.skills` | Development skills and conventions | Structured development guides |
+| Brownfield Skills Generator | Development skills and conventions | Structured development guides |
 | `repomix --skill-generate` | Code content and structure | Code snapshots and indexes |
 
 **Recommended Workflow**:
 1. Run `repomix --skill-generate` first to generate code snapshots
-2. Then run `/speckit.skills` to generate development skills
+2. Then run Brownfield Skills Generator to generate development skills
 3. Together they provide complete project understanding
 
 ### Error Handling

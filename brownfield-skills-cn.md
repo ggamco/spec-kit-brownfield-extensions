@@ -1,5 +1,5 @@
 ---
-description: 为棕地项目生成"精通本项目的资深开发工程师"技能(Skills)，使AI编程工具获得持续维护该项目所需的全部专业知识。
+description: 棕地项目开发Skills生成工具 - 为已有项目生成"精通本项目的资深开发工程师"技能(Skills)，使AI编程工具获得持续维护该项目所需的全部专业知识。
 handoffs:
   - label: 引导SDD工作流
     agent: /speckit.brownfield-bootstrap
@@ -336,7 +336,7 @@ repomix --skill-generate
 
 ---
 
-**版本**: 1.0.0 | **生成日期**: [DATE] | **来源**: /speckit.skills
+**版本**: 1.0.0 | **生成日期**: [DATE] | **来源**: 棕地项目开发Skills生成工具
 ```
 
 #### 步骤 1.3: 生成 architecture.md
@@ -835,7 +835,7 @@ ls -la .claude/skills/brownfield-developer-[project-name]/references/
 
 1. **验证 Skills 加载**: 重启 Claude Code 或刷新会话
 2. **测试技能效果**: 尝试询问项目相关问题
-3. **保持同步**: 项目重大变更后重新运行 `/speckit.skills`
+3. **保持同步**: 项目重大变更后重新运行此工具
 
 ### 建议命令
 
@@ -878,12 +878,12 @@ ls .claude/skills/
 
 | 工具 | 关注点 | 输出 |
 |------|--------|------|
-| `/speckit.skills` | 开发技能和规范 | 结构化的开发指南 |
+| 棕地项目Skills生成工具 | 开发技能和规范 | 结构化的开发指南 |
 | `repomix --skill-generate` | 代码内容和结构 | 代码快照和索引 |
 
 **推荐工作流**：
 1. 先运行 `repomix --skill-generate` 生成代码快照
-2. 再运行 `/speckit.skills` 生成开发技能
+2. 再运行棕地项目Skills生成工具生成开发技能
 3. 两者共同提供完整的项目理解
 
 ### 错误处理
