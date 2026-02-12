@@ -17,7 +17,7 @@ This repository contains two independent components:
 
 ```
 spec-kit-brownfield-extensions/
-├── extension/                   # spec-kit Extension (独立)
+├── extension/                   # spec-kit Extension
 │   ├── extension.yml            # Extension manifest (id: brownfield-bootstrap)
 │   ├── README.md                # Extension documentation
 │   ├── AI-INSTALL-GUIDE.md      # AI installation instructions
@@ -26,7 +26,7 @@ spec-kit-brownfield-extensions/
 │       ├── init.md              # English bootstrap command
 │       └── init-cn.md           # Chinese bootstrap command
 │
-└── skills/                      # Claude Code Skills (独立)
+└── skills/                      # Claude Code Skills
     ├── README.md                # Skills documentation
     ├── AI-INSTALL-GUIDE.md      # AI installation instructions
     ├── brownfield-skills/       # Developer expertise generator

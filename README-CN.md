@@ -17,7 +17,7 @@
 
 ```
 spec-kit-brownfield-extensions/
-├── extension/                   # spec-kit 扩展（独立）
+├── extension/                   # spec-kit 扩展
 │   ├── extension.yml            # 扩展清单 (id: brownfield-bootstrap)
 │   ├── README.md                # 扩展文档
 │   ├── AI-INSTALL-GUIDE.md      # AI 安装说明
@@ -26,7 +26,7 @@ spec-kit-brownfield-extensions/
 │       ├── init.md              # 英文引导命令
 │       └── init-cn.md           # 中文引导命令
 │
-└── skills/                      # Claude Code Skills（独立）
+└── skills/                      # Claude Code Skills
     ├── README.md                # Skills 文档
     ├── AI-INSTALL-GUIDE.md      # AI 安装说明
     ├── brownfield-skills/       # 开发者专业知识生成器
