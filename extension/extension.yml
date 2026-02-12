@@ -1,12 +1,13 @@
 schema_version: "1.0"
 
 extension:
-  id: "brownfield"
+  id: "brownfield-bootstrap"
   name: "Brownfield Bootstrap Extension"
-  version: "2.1.0"
+  version: "2.2.0"
   description: "Bootstrap existing brownfield projects into spec-kit SDD workflow with automatic project analysis and customized template generation"
   author: "wcpaxx"
   repository: "https://github.com/wcpaxx/spec-kit-brownfield-extensions"
+  homepage: "https://github.com/wcpaxx/spec-kit-brownfield-extensions"
   license: "MIT"
 
 requires:
@@ -19,29 +20,23 @@ requires:
 provides:
   commands:
     # English command
-    - name: "speckit.brownfield.bootstrap"
-      file: "commands/bootstrap.md"
+    - name: "speckit.brownfield-bootstrap.init"
+      file: "commands/init.md"
       description: "Initialize SDD for existing brownfield projects"
-      aliases: ["speckit.brownfield-bootstrap", "speckit.brownfield-bootstrap.bootstrap"]
+      aliases: ["speckit.brownfield.bootstrap", "speckit.brownfield-bootstrap.bootstrap"]
 
     # Chinese command (中文命令)
-    - name: "speckit.brownfield.bootstrap-cn"
-      file: "commands/bootstrap-cn.md"
+    - name: "speckit.brownfield-bootstrap.init-cn"
+      file: "commands/init-cn.md"
       description: "初始化棕地项目的SDD工作流"
-      aliases: ["speckit.brownfield-bootstrap-cn", "speckit.brownfield-bootstrap.bootstrap-cn"]
+      aliases: ["speckit.brownfield.bootstrap-cn", "speckit.brownfield-bootstrap.bootstrap-cn"]
 
-  skills:
-    - name: "brownfield-skills"
-      path: "skills/brownfield-skills"
-      description: "Generate senior developer Skills for project mastery"
-
-    - name: "brownfield-ears"
-      path: "skills/brownfield-ears"
-      description: "Convert natural language requirements to EARS format"
+  config:
+    file: "config-template.yml"
+    description: "Configuration options for brownfield bootstrap"
 
 tags:
   - "brownfield"
   - "bootstrap"
   - "sdd"
-  - "ears"
-  - "skills"
+  - "initialization"

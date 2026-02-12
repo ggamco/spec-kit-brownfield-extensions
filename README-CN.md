@@ -1,9 +1,9 @@
-# spec-kit 棕地项目引导扩展
+# spec-kit 棕地项目扩展
 
 > [!IMPORTANT]
 > **适用于棕地（现有）项目**
 >
-> 此扩展专为希望采用 [spec-kit](https://github.com/github/spec-kit) 规范驱动开发（SDD）工作流的**现有项目**而设计。
+> 此仓库提供工具，帮助**现有项目**采用 [spec-kit](https://github.com/github/spec-kit) 规范驱动开发（SDD）工作流。
 >
 > 如果您正在从零开始创建新项目，请使用标准的 `specify init` 命令。
 
@@ -11,59 +11,45 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## 这是什么？
+## 仓库结构
 
-当您有一个**现有项目（棕地项目）**并希望采用 spec-kit 的结构化开发工作流时，会面临一个挑战：标准的 `specify init` 会创建通用模板，无法反映项目的实际架构、技术栈和编码规范。
-
-**此扩展解决了这个问题**，通过：
-
-1. **逆向分析**现有代码库以提取架构 DNA
-2. **生成定制化**的项目宪章，反映实际项目原则
-3. **适配模板**到您特定的技术栈和编码风格
-4. **验证就绪状态**以确保 SDD 工作流可以立即启用
-
-## 工作流概览
-
-此扩展提供的命令扩展了标准 spec-kit SDD 工作流：
+此仓库包含两个独立组件：
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                           扩展 SDD 工作流                                        │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                  │
-│   [现有项目]                                                                      │
-│         │                                                                        │
-│         ▼                                                                        │
-│   ┌─────────────────────────┐                                                   │
-│   │ /speckit.brownfield.    │  ← 将现有项目引导至 SDD                             │
-│   │ bootstrap               │                                                    │
-│   └───────────┬─────────────┘                                                   │
-│               │                                                                  │
-│               ▼                                                                  │
-│   ┌─────────────────────────┐     ┌─────────────────────────┐                   │
-│   │ 用户需求                 │────▶│ brownfield-ears (Skill) │  ← 可选            │
-│   │ （自然语言）              │     │ （EARS 格式转换）         │    前置步骤        │
-│   └─────────────────────────┘     └───────────┬─────────────┘                   │
-│                                               │                                  │
-│                                               ▼                                  │
-│   ┌─────────────────────────────────────────────────────────────────────────┐   │
-│   │                    标准 spec-kit SDD 工作流                              │   │
-│   │  ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐              │   │
-│   │  │ /speckit │──▶│ /speckit │──▶│ /speckit │──▶│ /speckit │              │   │
-│   │  │ .specify │   │ .plan    │   │ .tasks   │   │.implement│              │   │
-│   │  └──────────┘   └──────────┘   └──────────┘   └──────────┘              │   │
-│   └─────────────────────────────────────────────────────────────────────────┘   │
-│                                                                                  │
-└─────────────────────────────────────────────────────────────────────────────────┘
+spec-kit-brownfield-extensions/
+├── extension/                   # spec-kit 扩展（独立）
+│   ├── extension.yml            # 扩展清单 (id: brownfield-bootstrap)
+│   ├── README.md                # 扩展文档
+│   ├── AI-INSTALL-GUIDE.md      # AI 安装说明
+│   ├── config-template.yml      # 配置模板
+│   └── commands/
+│       ├── init.md              # 英文引导命令
+│       └── init-cn.md           # 中文引导命令
+│
+└── skills/                      # Claude Code Skills（独立）
+    ├── README.md                # Skills 文档
+    ├── AI-INSTALL-GUIDE.md      # AI 安装说明
+    ├── brownfield-skills/       # 开发者专业知识生成器
+    │   ├── SKILL.md
+    │   └── references/
+    │       ├── analysis-guide.md
+    │       ├── templates.md
+    │       └── templates-cn.md
+    └── brownfield-ears/         # EARS 需求转换器
+        ├── SKILL.md
+        └── references/
+            ├── conversion-guide.md
+            ├── document-template.md
+            └── examples.md
 ```
 
-### 提供的组件
+## 组件概览
 
 | 组件 | 类型 | 用途 |
 |------|------|------|
-| `/speckit.brownfield.bootstrap` | 命令 | 为现有项目初始化 SDD |
-| `brownfield-skills` | Skill | 为项目生成高级开发者技能 |
-| `brownfield-ears` | Skill | 将需求转换为 EARS 格式 |
+| `extension/` | spec-kit 扩展 | 为现有项目引导 SDD 工作流 |
+| `skills/brownfield-skills` | Claude Code Skill | 生成高级开发者专业知识 |
+| `skills/brownfield-ears` | Claude Code Skill | 将需求转换为 EARS 格式 |
 
 ## 核心功能
 
@@ -90,156 +76,82 @@
 
 ## 快速开始
 
-### 前置条件
-
-- 已安装 **spec-kit**（[安装指南](https://github.com/github/spec-kit)）
-- **AI 编码代理**（Claude Code、GitHub Copilot、Cursor、Windsurf 等）
-- 具有已建立代码库的**现有项目**
-
-### 安装
-
-#### 人类用户
-
-**方式一：使用 spec-kit 扩展系统（推荐）**
+### 安装扩展
 
 ```bash
-# 从 GitHub 安装（发布到目录后）
-specify extension add brownfield
+# 使用 spec-kit 扩展系统
+specify extension add --dev /path/to/spec-kit-brownfield-extensions/extension
 
-# 或从源码安装（开发模式）
-specify extension add --dev /path/to/spec-kit-brownfield-extensions
+# 或手动复制命令
+cp extension/commands/init.md .claude/commands/speckit.brownfield-bootstrap.init.md
+cp extension/commands/init-cn.md .claude/commands/speckit.brownfield-bootstrap.init-cn.md
 ```
 
-**方式二：手动安装**
+### 安装 Skills
 
 ```bash
-# 克隆仓库
-git clone https://github.com/wcpaxx/spec-kit-brownfield-extensions.git
-
-# 复制到项目
-mkdir -p .claude/commands .claude/skills
-cp spec-kit-brownfield-extensions/commands/*.md .claude/commands/
-cp -r spec-kit-brownfield-extensions/skills/* .claude/skills/
+mkdir -p .claude/skills
+cp -r skills/brownfield-skills .claude/skills/
+cp -r skills/brownfield-ears .claude/skills/
 ```
 
-#### AI 代理
+### AI 代理安装
 
-> **AI 代理安装提示**
->
-> 阅读并执行 [AI-INSTALL-GUIDE.md](AI-INSTALL-GUIDE.md) 中的安装指引
+查看 AI 安装指南：
+- **扩展**: [extension/AI-INSTALL-GUIDE.md](extension/AI-INSTALL-GUIDE.md)
+- **Skills**: [skills/AI-INSTALL-GUIDE.md](skills/AI-INSTALL-GUIDE.md)
 
-### 从 v2.0.0 迁移
+## 使用方法
 
-如果从 2.0.0 版本升级：
+### 1. 引导您的项目
 
-| 旧名称 | 新名称 | 类型 |
-|--------|--------|------|
-| `/speckit.brownfield-bootstrap.bootstrap` | `/speckit.brownfield.bootstrap` | 命令 |
-| `/speckit.brownfield-bootstrap.skills` | `brownfield-skills` | Skill |
-| `/speckit.brownfield-bootstrap.ears` | `brownfield-ears` | Skill |
+```bash
+# 运行 init 命令
+/speckit.brownfield-bootstrap.init
 
-> 旧命令名称可作为别名使用，保持向后兼容。
-
-### 使用方法
-
-**1. 运行引导命令**
-
-```
-/speckit.brownfield.bootstrap
+# 或中文版本
+/speckit.brownfield-bootstrap.init-cn
 ```
 
-或指定特定焦点：
-```
-/speckit.brownfield.bootstrap 聚焦于用户认证模块
-```
-
-**2. 查看生成的文件**
-
-命令将生成：
+### 2. 查看生成的文件
 
 | 文件 | 路径 | 描述 |
-|------|------|-------------|
+|------|------|------|
 | 项目宪章 | `.specify/memory/constitution.md` | 核心原则和约束 |
 | 规范模板 | `.specify/templates/spec-template.md` | 功能规范模板 |
 | 计划模板 | `.specify/templates/plan-template.md` | 实施计划模板 |
 | 任务模板 | `.specify/templates/tasks-template.md` | 任务分解模板 |
 
-**3. 确认宪章**
-
-审查生成的宪章并确认或修改：
-- 从代码中派生的核心原则
-- 技术栈锁定版本
-- 目录契约
-- 模块职责（适用于多模块项目）
-
-**4. 开始使用 SDD 工作流**
-
-引导完成后：
+### 3. 开始 SDD 工作流
 
 ```bash
-# 创建新功能规范
 /speckit.specify "添加用户头像上传功能"
-
-# 生成实施计划
 /speckit.plan
-
-# 生成任务列表
 /speckit.tasks
-
-# 执行实施
 /speckit.implement
 ```
 
-## 生成的目录结构
+## 命令参考
 
-运行引导命令后，您的项目将包含：
+| 命令 | 描述 |
+|------|------|
+| `/speckit.brownfield-bootstrap.init` | 为现有项目初始化 SDD（英文） |
+| `/speckit.brownfield-bootstrap.init-cn` | 初始化棕地项目的SDD工作流（中文） |
 
-```
-your-project/
-├── .specify/                          # SDD 配置目录
-│   ├── memory/
-│   │   └── constitution.md            # 项目宪章（核心文件）
-│   └── templates/
-│       ├── spec-template.md           # 功能规范模板
-│       ├── plan-template.md           # 实施计划模板
-│       └── tasks-template.md          # 任务列表模板
-└── specs/                             # 功能规范目录
-    └── [###-feature-name]/            # 按功能组织
-        ├── spec.md
-        ├── plan.md
-        └── tasks.md
-```
+### 别名（向后兼容）
 
-## 开发者技能生成（新功能）
+| 旧名称 | 新名称 |
+|--------|--------|
+| `speckit.brownfield.bootstrap` | `speckit.brownfield-bootstrap.init` |
+| `speckit.brownfield.bootstrap-cn` | `speckit.brownfield-bootstrap.init-cn` |
 
-**棕地项目开发Skills生成工具**（`brownfield-skills.md` / `brownfield-skills-cn.md`）生成**项目技能**，使 Claude Code 表现得像一位维护您项目多年的高级开发者。
+## 开发者技能生成
 
-### 功能说明
-
-此命令分析您的项目并生成结构化技能：
-
-| 能力 | 描述 |
-|------------|-------------|
-| **精通技术栈** | 深入理解语言、框架和工具 |
-| **遵循规范** | 遵守项目的编码风格和模式 |
-| **理解架构** | 知道在哪里放置新代码以及模块如何交互 |
-| **优先复用** | 创建新代码前总是搜索现有代码 |
-| **保持兼容** | 永不破坏现有功能 |
-
-### 使用方法
-
-```bash
-# 将技能生成工具复制到命令目录
-cp brownfield-skills-cn.md .claude/commands/
-
-# 在 AI 编码工具中生成开发者技能
-```
-
-### 生成的技能结构
+`brownfield-skills` 技能生成**项目技能**，使 Claude Code 表现得像一位维护您项目多年的高级开发者。
 
 ```
 .claude/skills/brownfield-developer-[project-name]/
-├── SKILL.md                    # 技能入口点（使用指南）
+├── SKILL.md                    # 技能入口点
 └── references/
     ├── architecture.md         # 项目架构和分层
     ├── tech-stack.md           # 技术栈详情和约束
@@ -248,221 +160,33 @@ cp brownfield-skills-cn.md .claude/commands/
     └── development-patterns.md # 开发模式和最佳实践
 ```
 
-### 主要特性
+## EARS 需求转换
 
-- **幂等性**：随时运行以根据当前项目状态刷新技能
-- **团队共享**：将 `.claude/skills/` 添加到版本控制
-- **互补性**：与 Repomix 配合使用以实现完整的项目理解
-
-### 推荐工作流
-
-1. 运行棕地项目开发Skills生成工具生成开发者专业知识
-2. 运行 `repomix --skill-generate` 生成代码快照
-3. 二者结合提供全面的项目掌握
-
-> **提示**：在重大架构变更后重新运行此工具，保持 AI 理解的时效性。
-
-## 使用 Repomix 增强（推荐）
-
-对于大型棕地项目，我们推荐使用 [Repomix](https://github.com/yamadashy/repomix) 帮助 AI 编码工具更好地理解您的现有代码库。Repomix 生成结构化"技能"，作为 Claude Code 的长期记忆。
-
-### 为什么使用 Repomix？
-
-| 挑战 | Repomix 如何帮助 |
-|-----------|-------------------|
-| **上下文窗口限制** | 通过 Tree-sitter 将代码库压缩为 AI 友好格式 |
-| **代码复用** | 快速搜索现有的 Utils、DTOs、Services |
-| **准确性** | 生成的宪章精确反映模块结构 |
-| **动态更新** | `repomix --skill-generate` 是幂等的 - 随时运行以同步 |
-
-### 设置指南（Claude Code）
-
-**步骤 1：安装 Repomix CLI**
-
-```bash
-npm install -g repomix
-```
-
-**步骤 2：为 Claude Code 安装 Repomix MCP**
-
-配置 Claude Code 以支持 Repomix 的模型上下文协议：
-
-```bash
-claude mcp add repomix -- npx -y repomix --mcp
-```
-
-**步骤 3：安装 Repomix 插件（可选）**
-
-获取便捷的斜杠命令如 `/repomix-explorer`：
-
-```
-# 在 Claude Code 交互界面中
-/plugin install repomix-mcp@repomix
-```
-
-### 为项目生成技能
-
-在项目根目录运行以下命令：
-
-```bash
-repomix --skill-generate
-```
-
-这将创建一个带有结构化引用的 `.claude/skills/` 目录：
-
-```
-.claude/skills/repomix-reference-[project-name]/
-├── SKILL.md                 # 核心技能元数据
-└── references/
-    ├── summary.md           # 项目目的和统计
-    ├── project-structure.md # 目录树及行数统计
-    ├── files.md             # 完整文件内容（grep 优化）
-    └── tech-stack.md        # 自动检测的技术栈
-```
-
-Claude Code 会自动加载这些技能作为其长期记忆的一部分。
-
-### 最佳实践
-
-| 运行时机 | 操作 |
-|-------------|--------|
-| **首次使用 brownfield-bootstrap** | 在引导前运行 `repomix --skill-generate` |
-| **重大功能开发前** | 刷新技能以确保最新的代码库理解 |
-| **重大代码变更后** | 重新运行以同步 AI 的记忆与当前代码 |
-
-> **提示**：brownfield-bootstrap 命令已包含代码复用和理解现有代码的规则。加载 Repomix 技能后，Claude Code 将在创建新代码之前自动搜索现有实现。
-
-## EARS 需求转换（可选前置步骤）
-
-`/speckit.ears` 命令提供一个**可选的前置步骤**，在进入标准 SDD 工作流之前提高需求质量。它将自然语言需求转换为 [EARS（Easy Approach to Requirements Syntax）](https://alistairmavin.com/ears/) 格式。
-
-### 为什么使用 EARS？
-
-| 问题 | EARS 如何帮助 |
-|---------|----------------|
-| **需求模糊** | 固定句式模板强制明确触发条件和响应 |
-| **AI 误解** | 结构化格式减少歧义，提高 AI 准确性 |
-| **需求遗漏** | 分类模板确保全面覆盖 |
-| **验收标准不清晰** | 每个 EARS 需求天然可测试 |
-
-### EARS 五种需求模式
+`brownfield-ears` 技能将自然语言需求转换为 [EARS（Easy Approach to Requirements Syntax）](https://alistairmavin.com/ears/) 格式。
 
 | 模式 | 模板 | 示例 |
 |---------|----------|---------|
 | **普遍型** | `系统应 <功能>` | 系统应加密所有用户密码 |
 | **事件驱动型** | `当 <触发条件> 时，系统应 <响应>` | 当用户点击提交时，系统应验证输入 |
 | **状态驱动型** | `如果 <状态>，则系统应 <行为>` | 如果用户是管理员，则系统应显示管理面板 |
-| **可选功能型** | `在 <条件> 下，用户可以 <操作>` | 在启用通知的情况下，用户可以设置频率 |
-| **复杂型** | `当 <触发条件>，且 <状态> 时，系统应 <响应>` | 当登录失败，且尝试次数超过5次时，系统应锁定账户 |
-
-### 使用方法
-
-```bash
-# 将需求转换为 EARS 格式
-/speckit.ears 我需要一个支持手机和邮箱的用户登录功能
-
-# 然后继续创建规范
-/speckit.specify .docs/EARS/001-user-login.md
-```
-
-### 输出位置
-
-EARS 文档与 spec-kit 核心目录分开存储：
-
-```
-your-project/
-├── .docs/                    # 文档（非 SDD 核心）
-│   └── EARS/                 # EARS 需求文档
-│       ├── 001-user-login.md
-│       └── 002-payment.md
-├── .specify/                 # SDD 配置（不变）
-└── specs/                    # 功能规范（不变）
-```
-
-> **为什么单独存放？**
-> EARS 需求是可选的，位于标准 spec-kit 工作流之外。将其保存在 `.docs/EARS/` 可避免干扰核心 SDD 文件。
-
-## 语言版本
-
-| 文件 | 语言 | 描述 |
-|------|----------|-------------|
-| `speckit.brownfield-bootstrap.md` | English | 棕地引导（英文） |
-| `speckit.brownfield-bootstrap-cn.md` | 中文 | 棕地引导（中文） |
-| `brownfield-skills.md` | English | 棕地项目开发Skills生成工具（英文） |
-| `brownfield-skills-cn.md` | 中文 | 棕地项目开发Skills生成工具（中文） |
-| `speckit.ears.md` | English | EARS 转换（英文） |
-| `speckit.ears-cn.md` | 中文 | EARS 转换（中文） |
 
 ## 兼容性
 
 ### AI 代理
-
-此扩展适用于任何支持自定义命令的 AI 代理：
-
 - ✅ **Claude Code**（完整测试）
 - ✅ **Cursor**（已测试）
 - ✅ **GitHub Copilot**（通过 instructions）
 - ✅ **Windsurf**（通过 project rules）
-- ✅ **其他 AI 编码工具**（复制到命令目录）
 
 ### spec-kit 版本
-
-- ✅ **spec-kit v0.0.18+**（使用 `/speckit.` 前缀）
+- ✅ **spec-kit v0.1.0+**
 - ✅ 与核心 spec-kit 工作流完全兼容
-- ✅ 对现有 spec-kit 设置的非破坏性添加
 
 ### 项目类型
-
 - ✅ 单模块项目
 - ✅ Maven/Gradle 多模块项目
 - ✅ Node.js Monorepo（带 workspaces）
-- ✅ Go Workspace
-- ✅ Rust Workspace
-- ✅ Python Monorepo
-- ✅ 任何语言/框架组合
-
-## 棕地 vs 绿地
-
-| 方面 | 绿地（`specify init`） | 棕地（此扩展） |
-|--------|---------------------------|----------------------------|
-| **起点** | 空项目 | 现有代码库 |
-| **技术栈** | 您选择 | 自动检测并锁定 |
-| **架构** | 您设计 | 逆向工程 |
-| **模板** | 通用 | 项目特定 |
-| **宪章** | 最小化 | 从代码分析中全面提取 |
-| **多模块** | 基础 | 完整模块映射 |
-
-## 常见问题
-
-### 什么时候应该使用此扩展而不是 `specify init`？
-
-使用 **brownfield-bootstrap** 当：
-- 您有一个具有已建立模式的现有代码库
-- 您的项目有特定的技术栈约束
-- 您希望模板与现有代码风格匹配
-- 您有多模块项目结构
-
-使用 **`specify init`** 当：
-- 从零开始新项目
-- 您想建立新的规范
-- 项目结构尚未定义
-
-### 这会修改我现有的代码吗？
-
-**不会！** 此命令只在 `.specify/` 和 `specs/` 目录中创建新文件。它不会修改任何现有源代码。
-
-### 我可以自定义生成的模板吗？
-
-可以！引导后，您可以自由修改：
-- `.specify/memory/constitution.md` - 更新原则
-- `.specify/templates/*.md` - 自定义模板格式
-
-### 如果我的项目结构不寻常怎么办？
-
-命令将：
-1. 尽最大努力分析您的结构
-2. 用 `[需要澄清: ...]` 标记不确定的项目
-3. 询问您确认或提供指导
+- ✅ Go Workspace、Rust Workspace、Python Monorepo
 
 ## 贡献
 
@@ -476,7 +200,6 @@ MIT 许可证 - 详见 [LICENSE](LICENSE)。
 
 - [GitHub spec-kit 团队](https://github.com/github/spec-kit) 提供基础
 - [spec-kit-cn](https://github.com/Linfee/spec-kit-cn) 提供 spec-kit 中文本地化
-- [spec-kit-extensions](https://github.com/MartyBonacci/spec-kit-extensions) 提供灵感
 - [Repomix](https://github.com/yamadashy/repomix) 提供代码理解和技能生成
 - 社区贡献者
 
@@ -485,8 +208,3 @@ MIT 许可证 - 详见 [LICENSE](LICENSE)。
 - **问题反馈**: [GitHub Issues](https://github.com/wcpaxx/spec-kit-brownfield-extensions/issues)
 - **讨论**: [GitHub Discussions](https://github.com/wcpaxx/spec-kit-brownfield-extensions/discussions)
 - **spec-kit**: [原始 spec-kit 仓库](https://github.com/github/spec-kit)
-- **Repomix**: [代码理解工具](https://github.com/yamadashy/repomix)
-
----
-
-**准备好尝试了吗？** 将命令文件复制到您的 AI 工具的命令目录并运行 `/speckit.brownfield-bootstrap`！
