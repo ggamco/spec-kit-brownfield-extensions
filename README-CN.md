@@ -98,24 +98,52 @@
 
 ### 安装
 
-**步骤 1：复制命令文件**
-
-将命令文件复制到您的 AI 编码工具的命令目录：
-
-| AI 工具 | 目标目录 |
-|---------|------------------|
-| **Claude Code** | `.claude/commands/` |
-| **Cursor** | `.cursor/commands/` |
-| **其他工具** | 查看工具文档 |
+**方式一：使用 spec-kit 扩展系统（推荐）**
 
 ```bash
-# Claude Code 示例
-mkdir -p .claude/commands/
-cp speckit.brownfield-bootstrap.md .claude/commands/
+# 从 GitHub 安装（发布到目录后）
+specify extension add brownfield-bootstrap
 
-# 中文版本
-cp speckit.brownfield-bootstrap-cn.md .claude/commands/
+# 或从源码安装（开发模式）
+specify extension add --dev /path/to/spec-kit-brownfield-extensions
 ```
+
+**方式二：手动安装（旧方式）**
+
+> **注意**：此方法已弃用，请使用上述扩展系统。
+
+将命令文件复制到 AI 编码工具的命令目录：
+
+| AI 工具 | 目标目录 |
+|---------|----------|
+| **Claude Code** | `.claude/commands/` |
+| **Cursor** | `.cursor/commands/` |
+
+```bash
+# 克隆仓库
+git clone https://github.com/wcpaxx/spec-kit-brownfield-extensions.git
+
+# 复制命令（以 Claude Code 为例）
+cp spec-kit-brownfield-extensions/commands/*.md .claude/commands/
+```
+
+### 从手动安装迁移
+
+如果你之前手动安装了命令：
+
+1. 从 `.claude/commands/` 或 `.cursor/commands/` 删除旧命令文件
+2. 使用扩展系统安装：`specify extension add --dev /path/to/repo`
+3. 验证安装：`specify extension list`
+
+**命令名称变更**（提供别名以保持向后兼容）：
+
+| 旧命令 | 新命令 |
+|--------|--------|
+| `/speckit.brownfield-bootstrap` | `/speckit.brownfield-bootstrap.bootstrap` |
+| `/brownfield-skills` | `/speckit.brownfield-bootstrap.skills` |
+| `/speckit.ears` | `/speckit.brownfield-bootstrap.ears` |
+
+> 旧命令名称仍可作为别名使用，保持向后兼容。
 
 **步骤 2：验证安装**
 

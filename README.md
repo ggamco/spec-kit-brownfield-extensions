@@ -98,31 +98,52 @@ This extension provides commands that extend the standard spec-kit SDD workflow:
 
 ### Installation
 
-**Step 1: Copy Command File**
+**Option 1: Using spec-kit Extension System (Recommended)**
 
-Copy the command file to your AI coding tool's commands directory:
+```bash
+# Install from GitHub (once published to catalog)
+specify extension add brownfield-bootstrap
+
+# Or install from source for development
+specify extension add --dev /path/to/spec-kit-brownfield-extensions
+```
+
+**Option 2: Manual Installation (Legacy)**
+
+> **Note**: This method is deprecated. Please use the extension system above.
+
+Copy command files to your AI coding tool's commands directory:
 
 | AI Tool | Target Directory |
 |---------|------------------|
 | **Claude Code** | `.claude/commands/` |
 | **Cursor** | `.cursor/commands/` |
-| **Other Tools** | Check tool documentation |
 
 ```bash
-# Example for Claude Code
-mkdir -p .claude/commands/
-cp speckit.brownfield-bootstrap.md .claude/commands/
+# Clone the repository
+git clone https://github.com/wcpaxx/spec-kit-brownfield-extensions.git
 
-# For Chinese version
-cp speckit.brownfield-bootstrap-cn.md .claude/commands/
+# Copy commands (example for Claude Code)
+cp spec-kit-brownfield-extensions/commands/*.md .claude/commands/
 ```
 
-**Step 2: Verify Installation**
+### Migration from Manual Installation
 
-In your AI coding tool, try:
-```
-/speckit.brownfield-bootstrap
-```
+If you previously installed commands manually:
+
+1. Remove old command files from `.claude/commands/` or `.cursor/commands/`
+2. Install using extension system: `specify extension add --dev /path/to/repo`
+3. Verify with: `specify extension list`
+
+**Command Name Changes** (aliases provided for backward compatibility):
+
+| Old Command | New Command |
+|-------------|-------------|
+| `/speckit.brownfield-bootstrap` | `/speckit.brownfield-bootstrap.bootstrap` |
+| `/brownfield-skills` | `/speckit.brownfield-bootstrap.skills` |
+| `/speckit.ears` | `/speckit.brownfield-bootstrap.ears` |
+
+> Old command names still work as aliases for backward compatibility.
 
 ### Usage
 

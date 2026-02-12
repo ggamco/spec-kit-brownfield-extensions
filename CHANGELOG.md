@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-02-12
+
+### Breaking Changes
+
+- **Extension System Migration**: Project now follows spec-kit official extension format
+  - Requires spec-kit v0.1.0 or higher with extension support
+  - Commands moved from root to `commands/` directory
+  - Command names follow new pattern: `speckit.brownfield-bootstrap.{command}`
+  - Old command names still work as aliases for backward compatibility
+
+### Added
+
+- `extension.yml` manifest file for spec-kit extension system
+- `commands/` directory structure following extension conventions
+- Backward compatibility aliases for all commands
+- `after_tasks` hook to suggest generating developer skills
+- Migration guide in README for existing users
+
+### Changed
+
+- Installation method: now uses `specify extension add` command
+- File structure: command files moved to `commands/` directory
+- Command naming: follows `speckit.{extension-id}.{command}` pattern
+
+### Command Name Mapping
+
+| Old Name | New Name | Alias |
+|----------|----------|-------|
+| `speckit.brownfield-bootstrap` | `speckit.brownfield-bootstrap.bootstrap` | Yes |
+| `speckit.brownfield-bootstrap-cn` | `speckit.brownfield-bootstrap.bootstrap-cn` | Yes |
+| `brownfield-skills` | `speckit.brownfield-bootstrap.skills` | Yes |
+| `brownfield-skills-cn` | `speckit.brownfield-bootstrap.skills-cn` | Yes |
+| `speckit.ears` | `speckit.brownfield-bootstrap.ears` | Yes |
+| `speckit.ears-cn` | `speckit.brownfield-bootstrap.ears-cn` | Yes |
+
 ## [1.1.0] - 2025-01-08
 
 ### Added
