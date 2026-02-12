@@ -35,13 +35,13 @@ This extension provides commands that extend the standard spec-kit SDD workflow:
 │         │                                                                        │
 │         ▼                                                                        │
 │   ┌─────────────────────────┐                                                   │
-│   │ /speckit.brownfield-    │  ← Bootstrap existing project into SDD            │
+│   │ /speckit.brownfield.    │  ← Bootstrap existing project into SDD            │
 │   │ bootstrap               │                                                    │
 │   └───────────┬─────────────┘                                                   │
 │               │                                                                  │
 │               ▼                                                                  │
 │   ┌─────────────────────────┐     ┌─────────────────────────┐                   │
-│   │ User Requirements       │────▶│ /speckit.ears           │  ← Optional       │
+│   │ User Requirements       │────▶│ brownfield-ears (Skill) │  ← Optional       │
 │   │ (Natural Language)      │     │ (EARS Format Conversion)│    Pre-step       │
 │   └─────────────────────────┘     └───────────┬─────────────┘                   │
 │                                               │                                  │
@@ -57,13 +57,13 @@ This extension provides commands that extend the standard spec-kit SDD workflow:
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Commands Provided
+### Components Provided
 
-| Command | Purpose | When to Use |
-|---------|---------|-------------|
-| `/speckit.brownfield-bootstrap` | Initialize SDD for existing projects | First time adopting spec-kit in a brownfield project |
-| `brownfield-skills` | Generate senior developer Skills for project | Enable AI to master project conventions and patterns |
-| `/speckit.ears` | Convert requirements to EARS format | Before `/speckit.specify` when requirements are complex or ambiguous |
+| Component | Type | Purpose |
+|-----------|------|---------|
+| `/speckit.brownfield.bootstrap` | Command | Initialize SDD for existing projects |
+| `brownfield-skills` | Skill | Generate senior developer expertise for project |
+| `brownfield-ears` | Skill | Convert requirements to EARS format |
 
 ## Key Features
 
@@ -98,64 +98,59 @@ This extension provides commands that extend the standard spec-kit SDD workflow:
 
 ### Installation
 
+#### For Humans
+
 **Option 1: Using spec-kit Extension System (Recommended)**
 
 ```bash
 # Install from GitHub (once published to catalog)
-specify extension add brownfield-bootstrap
+specify extension add brownfield
 
 # Or install from source for development
 specify extension add --dev /path/to/spec-kit-brownfield-extensions
 ```
 
-**Option 2: Manual Installation (Legacy)**
-
-> **Note**: This method is deprecated. Please use the extension system above.
-
-Copy command files to your AI coding tool's commands directory:
-
-| AI Tool | Target Directory |
-|---------|------------------|
-| **Claude Code** | `.claude/commands/` |
-| **Cursor** | `.cursor/commands/` |
+**Option 2: Manual Installation**
 
 ```bash
 # Clone the repository
 git clone https://github.com/wcpaxx/spec-kit-brownfield-extensions.git
 
-# Copy commands (example for Claude Code)
+# Copy to your project
+mkdir -p .claude/commands .claude/skills
 cp spec-kit-brownfield-extensions/commands/*.md .claude/commands/
+cp -r spec-kit-brownfield-extensions/skills/* .claude/skills/
 ```
 
-### Migration from Manual Installation
+#### For AI Agents
 
-If you previously installed commands manually:
+> **AI Agent Installation Prompt**
+>
+> Read and execute the installation instructions in [AI-INSTALL-GUIDE.md](AI-INSTALL-GUIDE.md)
 
-1. Remove old command files from `.claude/commands/` or `.cursor/commands/`
-2. Install using extension system: `specify extension add --dev /path/to/repo`
-3. Verify with: `specify extension list`
+### Migration from v2.0.0
 
-**Command Name Changes** (aliases provided for backward compatibility):
+If upgrading from version 2.0.0:
 
-| Old Command | New Command |
-|-------------|-------------|
-| `/speckit.brownfield-bootstrap` | `/speckit.brownfield-bootstrap.bootstrap` |
-| `/brownfield-skills` | `/speckit.brownfield-bootstrap.skills` |
-| `/speckit.ears` | `/speckit.brownfield-bootstrap.ears` |
+| Old Name | New Name | Type |
+|----------|----------|------|
+| `/speckit.brownfield-bootstrap.bootstrap` | `/speckit.brownfield.bootstrap` | Command |
+| `/speckit.brownfield-bootstrap.skills` | `brownfield-skills` | Skill |
+| `/speckit.brownfield-bootstrap.ears` | `brownfield-ears` | Skill |
 
-> Old command names still work as aliases for backward compatibility.
+> Old command names work as aliases for backward compatibility.
 
 ### Usage
 
 **1. Run the Bootstrap Command**
 
 ```
-/speckit.brownfield-bootstrap
+/speckit.brownfield.bootstrap
 ```
 
 Or with specific focus:
 ```
-/speckit.brownfield-bootstrap Focus on the user authentication module
+/speckit.brownfield.bootstrap Focus on the user authentication module
 ```
 
 **2. Review Generated Files**

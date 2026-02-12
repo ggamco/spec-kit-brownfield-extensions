@@ -35,13 +35,13 @@
 │         │                                                                        │
 │         ▼                                                                        │
 │   ┌─────────────────────────┐                                                   │
-│   │ /speckit.brownfield-    │  ← 将现有项目引导至 SDD                             │
+│   │ /speckit.brownfield.    │  ← 将现有项目引导至 SDD                             │
 │   │ bootstrap               │                                                    │
 │   └───────────┬─────────────┘                                                   │
 │               │                                                                  │
 │               ▼                                                                  │
 │   ┌─────────────────────────┐     ┌─────────────────────────┐                   │
-│   │ 用户需求                 │────▶│ /speckit.ears           │  ← 可选            │
+│   │ 用户需求                 │────▶│ brownfield-ears (Skill) │  ← 可选            │
 │   │ （自然语言）              │     │ （EARS 格式转换）         │    前置步骤        │
 │   └─────────────────────────┘     └───────────┬─────────────┘                   │
 │                                               │                                  │
@@ -57,13 +57,13 @@
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 提供的命令
+### 提供的组件
 
-| 命令 | 用途 | 使用时机 |
-|---------|---------|-------------|
-| `/speckit.brownfield-bootstrap` | 为现有项目初始化 SDD | 首次在棕地项目中采用 spec-kit |
-| `brownfield-skills` | 为项目生成高级开发者技能 | 使 AI 掌握项目规范和模式 |
-| `/speckit.ears` | 将需求转换为 EARS 格式 | 在 `/speckit.specify` 之前，当需求复杂或模糊时 |
+| 组件 | 类型 | 用途 |
+|------|------|------|
+| `/speckit.brownfield.bootstrap` | 命令 | 为现有项目初始化 SDD |
+| `brownfield-skills` | Skill | 为项目生成高级开发者技能 |
+| `brownfield-ears` | Skill | 将需求转换为 EARS 格式 |
 
 ## 核心功能
 
@@ -98,71 +98,59 @@
 
 ### 安装
 
+#### 人类用户
+
 **方式一：使用 spec-kit 扩展系统（推荐）**
 
 ```bash
 # 从 GitHub 安装（发布到目录后）
-specify extension add brownfield-bootstrap
+specify extension add brownfield
 
 # 或从源码安装（开发模式）
 specify extension add --dev /path/to/spec-kit-brownfield-extensions
 ```
 
-**方式二：手动安装（旧方式）**
-
-> **注意**：此方法已弃用，请使用上述扩展系统。
-
-将命令文件复制到 AI 编码工具的命令目录：
-
-| AI 工具 | 目标目录 |
-|---------|----------|
-| **Claude Code** | `.claude/commands/` |
-| **Cursor** | `.cursor/commands/` |
+**方式二：手动安装**
 
 ```bash
 # 克隆仓库
 git clone https://github.com/wcpaxx/spec-kit-brownfield-extensions.git
 
-# 复制命令（以 Claude Code 为例）
+# 复制到项目
+mkdir -p .claude/commands .claude/skills
 cp spec-kit-brownfield-extensions/commands/*.md .claude/commands/
+cp -r spec-kit-brownfield-extensions/skills/* .claude/skills/
 ```
 
-### 从手动安装迁移
+#### AI 代理
 
-如果你之前手动安装了命令：
+> **AI 代理安装提示**
+>
+> 阅读并执行 [AI-INSTALL-GUIDE.md](AI-INSTALL-GUIDE.md) 中的安装指引
 
-1. 从 `.claude/commands/` 或 `.cursor/commands/` 删除旧命令文件
-2. 使用扩展系统安装：`specify extension add --dev /path/to/repo`
-3. 验证安装：`specify extension list`
+### 从 v2.0.0 迁移
 
-**命令名称变更**（提供别名以保持向后兼容）：
+如果从 2.0.0 版本升级：
 
-| 旧命令 | 新命令 |
-|--------|--------|
-| `/speckit.brownfield-bootstrap` | `/speckit.brownfield-bootstrap.bootstrap` |
-| `/brownfield-skills` | `/speckit.brownfield-bootstrap.skills` |
-| `/speckit.ears` | `/speckit.brownfield-bootstrap.ears` |
+| 旧名称 | 新名称 | 类型 |
+|--------|--------|------|
+| `/speckit.brownfield-bootstrap.bootstrap` | `/speckit.brownfield.bootstrap` | 命令 |
+| `/speckit.brownfield-bootstrap.skills` | `brownfield-skills` | Skill |
+| `/speckit.brownfield-bootstrap.ears` | `brownfield-ears` | Skill |
 
-> 旧命令名称仍可作为别名使用，保持向后兼容。
-
-**步骤 2：验证安装**
-
-在您的 AI 编码工具中尝试：
-```
-/speckit.brownfield-bootstrap
-```
+> 旧命令名称可作为别名使用，保持向后兼容。
 
 ### 使用方法
 
 **1. 运行引导命令**
 
 ```
-/speckit.brownfield-bootstrap
+/speckit.brownfield.bootstrap
 ```
 
 或指定特定焦点：
 ```
-/speckit.brownfield-bootstrap 聚焦于用户认证模块
+/speckit.brownfield.bootstrap 聚焦于用户认证模块
 ```
 
 **2. 查看生成的文件**

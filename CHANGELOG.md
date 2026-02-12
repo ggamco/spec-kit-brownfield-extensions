@@ -5,6 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-02-12
+
+### Breaking Changes
+
+- **Extension ID simplified**: Changed from `brownfield-bootstrap` to `brownfield`
+- **Command renamed**: `speckit.brownfield-bootstrap.bootstrap` → `speckit.brownfield.bootstrap`
+- **Skills/EARS converted to Skills**: Now standalone Skills instead of extension commands
+
+### Added
+
+- `skills/brownfield-skills/` - Project expertise generator (now a Skill)
+- `skills/brownfield-ears/` - EARS requirements converter (now a Skill)
+- `AI-INSTALL-GUIDE.md` - Executable installation instructions for AI agents
+- References directory structure following Skill best practices
+
+### Changed
+
+- Extension ID: `brownfield-bootstrap` → `brownfield`
+- Command pattern: `speckit.brownfield.{command}` (simplified)
+- Skills and EARS moved from `commands/` to `skills/` directory
+- README updated with human/AI installation sections
+
+### Removed
+
+- `commands/skills.md` - Now `skills/brownfield-skills/SKILL.md`
+- `commands/skills-cn.md` - Merged into brownfield-skills references
+- `commands/ears.md` - Now `skills/brownfield-ears/SKILL.md`
+- `commands/ears-cn.md` - Merged into brownfield-ears references
+- `hooks.after_tasks` - Removed (skills are now standalone)
+
+### Migration from v2.0.0
+
+| v2.0.0 | v2.1.0 | Type |
+|--------|--------|------|
+| `/speckit.brownfield-bootstrap.bootstrap` | `/speckit.brownfield.bootstrap` | Command |
+| `/speckit.brownfield-bootstrap.skills` | `brownfield-skills` | Skill |
+| `/speckit.brownfield-bootstrap.ears` | `brownfield-ears` | Skill |
+
+Old command names work as aliases for backward compatibility.
+
 ## [2.0.0] - 2026-02-12
 
 ### Breaking Changes

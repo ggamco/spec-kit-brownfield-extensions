@@ -1,9 +1,9 @@
 schema_version: "1.0"
 
 extension:
-  id: "brownfield-bootstrap"
+  id: "brownfield"
   name: "Brownfield Bootstrap Extension"
-  version: "2.0.0"
+  version: "2.1.0"
   description: "Bootstrap existing brownfield projects into spec-kit SDD workflow with automatic project analysis and customized template generation"
   author: "wcpaxx"
   repository: "https://github.com/wcpaxx/spec-kit-brownfield-extensions"
@@ -18,44 +18,26 @@ requires:
 
 provides:
   commands:
-    # English commands
-    - name: "speckit.brownfield-bootstrap.bootstrap"
+    # English command
+    - name: "speckit.brownfield.bootstrap"
       file: "commands/bootstrap.md"
       description: "Initialize SDD for existing brownfield projects"
-      aliases: ["speckit.brownfield-bootstrap"]
+      aliases: ["speckit.brownfield-bootstrap", "speckit.brownfield-bootstrap.bootstrap"]
 
-    - name: "speckit.brownfield-bootstrap.skills"
-      file: "commands/skills.md"
-      description: "Generate senior developer Skills for project mastery"
-      aliases: ["brownfield-skills"]
-
-    - name: "speckit.brownfield-bootstrap.ears"
-      file: "commands/ears.md"
-      description: "Convert natural language requirements to EARS format"
-      aliases: ["speckit.ears"]
-
-    # Chinese commands (中文命令)
-    - name: "speckit.brownfield-bootstrap.bootstrap-cn"
+    # Chinese command (中文命令)
+    - name: "speckit.brownfield.bootstrap-cn"
       file: "commands/bootstrap-cn.md"
       description: "初始化棕地项目的SDD工作流"
-      aliases: ["speckit.brownfield-bootstrap-cn"]
+      aliases: ["speckit.brownfield-bootstrap-cn", "speckit.brownfield-bootstrap.bootstrap-cn"]
 
-    - name: "speckit.brownfield-bootstrap.skills-cn"
-      file: "commands/skills-cn.md"
-      description: "为项目生成资深开发者技能"
-      aliases: ["brownfield-skills-cn"]
+  skills:
+    - name: "brownfield-skills"
+      path: "skills/brownfield-skills"
+      description: "Generate senior developer Skills for project mastery"
 
-    - name: "speckit.brownfield-bootstrap.ears-cn"
-      file: "commands/ears-cn.md"
-      description: "将自然语言需求转换为EARS格式"
-      aliases: ["speckit.ears-cn"]
-
-hooks:
-  after_tasks:
-    command: "speckit.brownfield-bootstrap.skills"
-    optional: true
-    prompt: "Generate developer Skills to help AI master your project conventions?"
-    description: "Automatically suggest generating brownfield developer skills after task creation"
+    - name: "brownfield-ears"
+      path: "skills/brownfield-ears"
+      description: "Convert natural language requirements to EARS format"
 
 tags:
   - "brownfield"
