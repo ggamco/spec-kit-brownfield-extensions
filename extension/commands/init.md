@@ -30,6 +30,32 @@ This command is used to bring **existing projects (brownfield projects)** into t
 3. **Adapt templates** to the project's specific tech stack and coding style
 4. **Verify readiness** to ensure SDD workflow can be immediately enabled
 
+## ⚠️ Prerequisites Check
+
+> **🚨 CRITICAL: This command requires spec-kit to be initialized first!**
+
+**Before running this command, verify the following:**
+
+```bash
+# Check 1: .specify/ directory exists (created by `specify init`)
+test -d .specify && echo "✅ .specify/ exists" || echo "❌ Missing .specify/ - Run 'specify init --here --ai claude --force' first"
+
+# Check 2: Core commands exist (from spec-kit template)
+test -f .claude/commands/speckit.specify.md && echo "✅ Core commands exist" || echo "❌ Missing core commands - Run 'specify init --here' first"
+```
+
+**If checks fail, you must run:**
+
+```bash
+# Initialize spec-kit in current directory first
+specify init --here --ai claude --force
+```
+
+**Why this is required:**
+- This extension **customizes** existing spec-kit configuration
+- Core commands (`/speckit.specify`, `/speckit.plan`, `/speckit.tasks`) come from `specify init`, not this extension
+- This command will **overwrite** constitution.md and templates with project-specific versions
+
 ## ⚠️ Critical: Target Directory Structure
 
 > **🚨 Mandatory Constraint - Must Read**
